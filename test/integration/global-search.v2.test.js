@@ -20,8 +20,8 @@ const { v4: uuidv4 } = require('uuid');
 const GlobalSearchV2 = require('../../dist/global-search/v2');
 const authHelper = require('../resources/auth-helper.js');
 
-// testcase timeout value (120s).
-const timeout = 120000;
+// testcase timeout value (30s).
+const timeout = 30000;
 
 // Location of our config file.
 const configFile = 'global_search.env';
@@ -37,7 +37,7 @@ describe('GlobalSearchV2_integration', () => {
   let config;
 
   test('Init', async () => {
-    globalSearchService = GlobalSearchV2.newInstance({});
+    globalSearchService = GlobalSearchV2.newInstance();
     config = readExternalSources(GlobalSearchV2.DEFAULT_SERVICE_NAME);
     expect(globalSearchService).not.toBeNull();
     expect(config).not.toBeNull();
@@ -59,6 +59,8 @@ describe('GlobalSearchV2_integration', () => {
 
       const res = await globalSearchService.search(params);
       expect(res).toBeDefined();
+      console.log("Back from search()!!!");
+      console.log(res);
       expect(res.result).toBeDefined();
       expect(res.status).toEqual(200);
       console.log(`search() result: \n${JSON.stringify(res.result, null, 2)}`);
